@@ -28,8 +28,8 @@ private:
     };
 
     inline static const uint8_t iE[48] = {
-        32,  1,  2,  3,  4,  5, 4,  5,  6,  7,  8,  9,   8,  9, 10, 11, 12, 13, 12, 13, 14, 15, 16, 17,
-        16, 17, 18, 19, 20, 21, 20, 21, 22, 23, 24, 25, 24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32,  1
+        32, 1, 2, 3, 4, 5, 4, 5, 6, 7, 8, 9, 8, 9, 10, 11, 12, 13, 12, 13, 14, 15, 16, 17, 
+        16, 17, 18, 19, 20, 21, 20, 21, 22, 23, 24, 25, 24, 25, 26, 27, 28, 29, 28, 29, 30, 31, 32, 1
     };
 
     inline static const uint8_t iP[32] = {
@@ -48,5 +48,7 @@ private:
     };
 
 
-    static uint64_t apply_map_helper( uint64_t ival, const uint8_t* map, uint8_t isize, uint8_t msize );
+    static uint64_t apply_map_helper( uint64_t ival, const uint8_t* map, size_t isize, size_t osize );
+
+    static uint64_t get_bit( uint64_t val, size_t pos, size_t size );
 };
