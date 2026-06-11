@@ -1,0 +1,44 @@
+# ── Build output ──────────────────────────────────────────────────────────────
+/bin/
+/lib/
+
+# ── CMake build directories ───────────────────────────────────────────────────
+# CLion generates cmake-build-* folders (cmake-build-debug, cmake-build-release, etc.)
+cmake-build-*/
+
+# If you ever build manually outside CLion (e.g. mkdir build && cmake ..)
+build/
+
+# ── FetchContent cache ────────────────────────────────────────────────────────
+# spdlog and googletest are fetched at configure time — no need to commit them
+_deps/
+
+# ── CLion IDE files ───────────────────────────────────────────────────────────
+# .idea/ contains workspace state, run configs, and editor layout.
+# Most of it is machine-specific, but two files ARE useful to share:
+#   - .idea/codeStyles/   (shared code formatting rules)
+#   - .idea/runConfigurations/  (shared run configurations)
+# Ignore the rest:
+.idea/*
+!.idea/codeStyles/
+!.idea/runConfigurations/
+
+# ── Compiled object files ─────────────────────────────────────────────────────
+*.o
+*.obj
+
+# ── Windows-specific ──────────────────────────────────────────────────────────
+*.exe
+*.pdb
+*.ilk
+Thumbs.db
+Desktop.ini
+
+# ── macOS-specific ────────────────────────────────────────────────────────────
+.DS_Store
+*.dSYM/
+
+# ── Linux-specific ────────────────────────────────────────────────────────────
+# Compiled binaries with no extension (Linux/macOS executables)
+# These are caught by /bin/ above, but just in case:
+*.out
