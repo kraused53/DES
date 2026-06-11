@@ -17,8 +17,14 @@ uint64_t Mapper::apply_map(uint64_t initial_value, MAP map) {
             result = apply_map_helper( initial_value, iE, 32, 48 );
             break;
         case P:
+            result = apply_map_helper( initial_value, iP, 32, 32 );
+            break;
         case PC1:
+            result = apply_map_helper( initial_value, iPC1, 64, 56 );
+            break;
         case PC2:
+            result = apply_map_helper( initial_value, iPC2, 56, 48 );
+            break;
         case S1:
         case S2:
         case S3:

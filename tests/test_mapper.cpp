@@ -39,14 +39,48 @@ static const uint8_t EMAP[48] = {
     28, 29, 30, 31, 32, 1
 };
 
+static const uint8_t PMAP[32] = {
+    16,  7, 20, 21, 
+    29, 12, 28, 17, 
+     1, 15, 23, 26, 
+     5, 18, 31, 10, 
+     2,  8, 24, 14, 
+    32, 27,  3,  9, 
+    19, 13, 30,  6, 
+    22, 11,  4, 25
+};
+
+static const uint8_t PC1MAP[56] = {
+    57, 49, 41, 33, 25, 17,  9,
+     1, 58, 50, 42, 34, 26, 18,
+    10,  2, 59, 51, 43, 35, 27,
+    19, 11,  3, 60, 52, 44, 36,
+    63, 55, 47, 39, 31, 23, 15,
+     7, 62, 54, 46, 38, 30, 22,
+    14,  6, 61, 53, 45, 37, 29,
+    21, 13,  5, 28, 20, 12,  4
+};
+
+static const uint8_t PC2MAP[48] = {
+    14, 17, 11, 24,  1,  5,
+     3, 28, 15,  6, 21, 10,
+    23, 19, 12,  4, 26,  8,
+    16,  7, 27, 20, 13,  2,
+    41, 52, 31, 37, 47, 55,
+    30, 40, 51, 45, 33, 48,
+    44, 49, 39, 56, 34, 53,
+    46, 42, 50, 36, 29, 32
+};
+
 /*
     Initial Permutation Testing
 */
 TEST(MapperTest, IP_Exhaustive) {
-    for( int i = 0; i < 64; i++ ) {
-        uint64_t test_value = 1ULL << ( IPMAP[i] - 1 );
+    for (int i = 0; i < 64; i++) {
+        uint64_t test_value = 1ULL << (64 - IPMAP[i]);
         uint64_t result = Mapper::apply_map(test_value, IP);
-        EXPECT_EQ(result, ( 1ULL << i ) );
+
+        EXPECT_EQ(result, (1ULL << (63 - i)));
     }
 }
 
@@ -60,10 +94,11 @@ TEST( MapperTest, IP_PermutationTest ) {
     Final Permutation Testing
 */
 TEST(MapperTest, FP_Exhaustive) {
-    for( int i = 0; i < 64; i++ ) {
-        uint64_t test_value = 1ULL << ( FPMAP[i] - 1 );
+    for (int i = 0; i < 64; i++) {
+        uint64_t test_value = 1ULL << (64 - FPMAP[i]);
         uint64_t result = Mapper::apply_map(test_value, FP);
-        EXPECT_EQ(result, ( 1ULL << i ) );
+
+        EXPECT_EQ(result, (1ULL << (63 - i)));
     }
 }
 
@@ -76,13 +111,13 @@ TEST( MapperTest, FP_PermutationTest ) {
 /*
     Expansion Map Testing
 */
-TEST(MapperTest, E_TableValidation) {
+TEST(MapperTest, E_Exhaustive) {
     for (int i = 0; i < 48; i++) {
-        uint64_t input = 1ULL << (EMAP[i] - 1);
+        uint64_t input = 1ULL << (32 - EMAP[i]);
 
         uint64_t result = Mapper::apply_map(input, E);
 
-        EXPECT_TRUE(result & (1ULL << i));
+        EXPECT_TRUE(result & (1ULL << (47 - i)));
     }
 }
 
@@ -90,4 +125,61 @@ TEST( MapperTest, E_PermutationTest ) {
     uint64_t input_value  = 0b11110000101010101111000010101010;
     uint64_t output_value = 0b011110100001010101010101011110100001010101010101;
     EXPECT_EQ( Mapper::apply_map(input_value, E), output_value );
+}
+
+/*
+    Permutation Testing
+*/
+TEST(MapperTest, P_Exhaustive) {
+    for (int i = 0; i < 32; i++) {
+        uint64_t test_value = 1ULL << (32 - PMAP[i]);
+
+        uint64_t result = Mapper::apply_map(test_value, P);
+
+        EXPECT_EQ(result, (1ULL << (31 - i)));
+    }
+}
+
+TEST( MapperTest, P_PermutationTest ) {
+    uint64_t input_value  = 0b01011100100000101011010110010111;
+    uint64_t output_value = 0b00100011010010101010100110111011;
+    EXPECT_EQ( Mapper::apply_map(input_value, P), output_value );
+}
+
+/*
+    Permutation Choice 1 Testing
+*/
+TEST(MapperTest, PC1_Exhaustive) {
+    for (int i = 0; i < 56; i++) {
+        uint64_t input = 1ULL << (64 - PC1MAP[i]);
+
+        uint64_t result = Mapper::apply_map(input, PC1);
+
+        EXPECT_TRUE(result & (1ULL << (55 - i)));
+    }
+}
+
+TEST( MapperTest, PC1_PermutationTest ) {
+    uint64_t input_value  = 0b0001001100110100010101110111100110011011101111001101111111110001;
+    uint64_t output_value = 0b11110000110011001010101011110101010101100110011110001111;
+    EXPECT_EQ( Mapper::apply_map(input_value, PC1), output_value );
+}
+
+/*
+    Permutation Choice 2 Testing
+*/
+TEST(MapperTest, PC2_Exhaustive) {
+    for (int i = 0; i < 48; i++) {
+        uint64_t input = 1ULL << (56 - PC2MAP[i]);
+
+        uint64_t result = Mapper::apply_map(input, PC2);
+
+        EXPECT_TRUE(result & (1ULL << (47 - i)));
+    }
+}
+
+TEST( MapperTest, PC2_PermutationTest ) {
+    uint64_t input_value  = 0b11100001100110010101010111111010101011001100111100011110;
+    uint64_t output_value = 0b000110110000001011101111111111000111000001110010;
+    EXPECT_EQ( Mapper::apply_map(input_value, PC2), output_value );
 }
