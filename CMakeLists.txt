@@ -32,7 +32,8 @@ add_library( des_lib STATIC
         src/Mapper.cpp
         src/SBox.cpp
         src/KeySchedule.cpp
-        # src/Feistel.cpp
+        src/Feistel.cpp
+        src/DES.cpp
 )
 
 target_include_directories( des_lib PUBLIC include )
@@ -73,6 +74,8 @@ if(DES_BUILD_TESTS)
         tests/test_mapper.cpp
         tests/test_sbox.cpp
         tests/test_keyschedule.cpp
+        tests/test_feistel.cpp
+        tests/test_des.cpp
     )
 
     target_link_libraries(

@@ -44,3 +44,40 @@ uint8_t SBox::apply(uint8_t value, SBOX box) {
 
   return ret;
 }
+
+uint8_t SBox::apply(uint8_t value, int box) {
+  uint8_t ret = 0;
+
+  // Redirect into to enum
+  switch (box) {
+    case 0:
+      ret = apply(value, S1);
+      break;
+    case 1:
+      ret = apply(value, S2);
+      break;
+    case 2:
+      ret = apply(value, S3);
+      break;
+    case 3:
+      ret = apply(value, S4);
+      break;
+    case 4:
+      ret = apply(value, S5);
+      break;
+    case 5:
+      ret = apply(value, S6);
+      break;
+    case 6:
+      ret = apply(value, S7);
+      break;
+    case 7:
+      ret = apply(value, S8);
+      break;
+    default:
+      spdlog::error("Not a valid box...");
+      break;
+  }
+
+  return ret;
+}

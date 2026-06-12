@@ -49,7 +49,7 @@ static const char Sbox[8][4][16] = {
 /*
     Test S1
  */
-TEST(TestSBox, S1_Exhaustive) {
+TEST(TestSBox, S1_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[0][0][count], SBox::apply(ival, S1));
@@ -59,10 +59,20 @@ TEST(TestSBox, S1_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S1_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[0][0][count], SBox::apply(ival, 0));
+    EXPECT_EQ(Sbox[0][1][count], SBox::apply(ival | 0x01, 0));
+    EXPECT_EQ(Sbox[0][2][count], SBox::apply(ival | 0x20, 0));
+    EXPECT_EQ(Sbox[0][3][count], SBox::apply(ival | 0x21, 0));
+  }
+}
+
 /*
     Test S2
  */
-TEST(TestSBox, S2_Exhaustive) {
+TEST(TestSBox, S2_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[1][0][count], SBox::apply(ival, S2));
@@ -72,10 +82,20 @@ TEST(TestSBox, S2_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S2_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[1][0][count], SBox::apply(ival, 1));
+    EXPECT_EQ(Sbox[1][1][count], SBox::apply(ival | 0x01, 1));
+    EXPECT_EQ(Sbox[1][2][count], SBox::apply(ival | 0x20, 1));
+    EXPECT_EQ(Sbox[1][3][count], SBox::apply(ival | 0x21, 1));
+  }
+}
+
 /*
     Test S3
  */
-TEST(TestSBox, S3_Exhaustive) {
+TEST(TestSBox, S3_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[2][0][count], SBox::apply(ival, S3));
@@ -85,10 +105,20 @@ TEST(TestSBox, S3_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S3_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[2][0][count], SBox::apply(ival, 2));
+    EXPECT_EQ(Sbox[2][1][count], SBox::apply(ival | 0x01, 2));
+    EXPECT_EQ(Sbox[2][2][count], SBox::apply(ival | 0x20, 2));
+    EXPECT_EQ(Sbox[2][3][count], SBox::apply(ival | 0x21, 2));
+  }
+}
+
 /*
     Test S4
  */
-TEST(TestSBox, S4_Exhaustive) {
+TEST(TestSBox, S4_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[3][0][count], SBox::apply(ival, S4));
@@ -98,10 +128,20 @@ TEST(TestSBox, S4_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S4_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[3][0][count], SBox::apply(ival, 3));
+    EXPECT_EQ(Sbox[3][1][count], SBox::apply(ival | 0x01, 3));
+    EXPECT_EQ(Sbox[3][2][count], SBox::apply(ival | 0x20, 3));
+    EXPECT_EQ(Sbox[3][3][count], SBox::apply(ival | 0x21, 3));
+  }
+}
+
 /*
     Test S5
  */
-TEST(TestSBox, S5_Exhaustive) {
+TEST(TestSBox, S5_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[4][0][count], SBox::apply(ival, S5));
@@ -111,10 +151,20 @@ TEST(TestSBox, S5_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S5_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[4][0][count], SBox::apply(ival, 4));
+    EXPECT_EQ(Sbox[4][1][count], SBox::apply(ival | 0x01, 4));
+    EXPECT_EQ(Sbox[4][2][count], SBox::apply(ival | 0x20, 4));
+    EXPECT_EQ(Sbox[4][3][count], SBox::apply(ival | 0x21, 4));
+  }
+}
+
 /*
     Test S6
  */
-TEST(TestSBox, S6_Exhaustive) {
+TEST(TestSBox, S6_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[5][0][count], SBox::apply(ival, S6));
@@ -124,10 +174,20 @@ TEST(TestSBox, S6_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S6_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[5][0][count], SBox::apply(ival, 5));
+    EXPECT_EQ(Sbox[5][1][count], SBox::apply(ival | 0x01, 5));
+    EXPECT_EQ(Sbox[5][2][count], SBox::apply(ival | 0x20, 5));
+    EXPECT_EQ(Sbox[5][3][count], SBox::apply(ival | 0x21, 5));
+  }
+}
+
 /*
     Test S7
  */
-TEST(TestSBox, S7_Exhaustive) {
+TEST(TestSBox, S7_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[6][0][count], SBox::apply(ival, S7));
@@ -137,15 +197,35 @@ TEST(TestSBox, S7_Exhaustive) {
   }
 }
 
+TEST(TestSBox, S7_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[6][0][count], SBox::apply(ival, 6));
+    EXPECT_EQ(Sbox[6][1][count], SBox::apply(ival | 0x01, 6));
+    EXPECT_EQ(Sbox[6][2][count], SBox::apply(ival | 0x20, 6));
+    EXPECT_EQ(Sbox[6][3][count], SBox::apply(ival | 0x21, 6));
+  }
+}
+
 /*
     Test S8
  */
-TEST(TestSBox, S8_Exhaustive) {
+TEST(TestSBox, S8_ExhaustiveEnum) {
   for (uint8_t count = 0; count < 16; count++) {
     uint8_t ival = count << 1;
     EXPECT_EQ(Sbox[7][0][count], SBox::apply(ival, S8));
     EXPECT_EQ(Sbox[7][1][count], SBox::apply(ival | 0x01, S8));
     EXPECT_EQ(Sbox[7][2][count], SBox::apply(ival | 0x20, S8));
     EXPECT_EQ(Sbox[7][3][count], SBox::apply(ival | 0x21, S8));
+  }
+}
+
+TEST(TestSBox, S8_ExhaustiveInt) {
+  for (uint8_t count = 0; count < 16; count++) {
+    uint8_t ival = count << 1;
+    EXPECT_EQ(Sbox[7][0][count], SBox::apply(ival, 7));
+    EXPECT_EQ(Sbox[7][1][count], SBox::apply(ival | 0x01, 7));
+    EXPECT_EQ(Sbox[7][2][count], SBox::apply(ival | 0x20, 7));
+    EXPECT_EQ(Sbox[7][3][count], SBox::apply(ival | 0x21, 7));
   }
 }

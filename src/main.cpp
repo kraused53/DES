@@ -2,22 +2,27 @@
 
 #include <cstdint>
 
-#include "Mapper.h"
+#include "DES.h"
 
-int main() {
-  uint64_t value = 0x0123456789ABCDEF;
-  uint64_t key = 0x133457799BBCDFF1;
-  spdlog::info("########################################");
-  spdlog::info("### ----- Initial  Permutation ----- ###");
-  spdlog::info("########################################");
-  spdlog::info("Data: 0x{:016X}", value);
-  spdlog::info("  IP: 0x{:016X}", Mapper::apply_map(value, IP));
+int main(int argc, char** argv) {
+  uint64_t value = 0;
+  uint64_t key = 0;
 
-  spdlog::info("########################################");
-  spdlog::info("### --------- Key Schedule --------- ###");
-  spdlog::info("########################################");
-  spdlog::info("  Initial Key Value: 0x{:016X}", key);
-  spdlog::info("Key Value After PC1: 0x{:016X}", Mapper::apply_map(key, PC1));
+  value = 0x0123456789ABCDEF;
+  key = 0x133457799BBCDFF1;
 
+  spdlog::set_level(spdlog::level::debug);
+  spdlog::info("Starting DES tool");
+  spdlog::info("Mode: Encryption");
+
+  spdlog::debug("Plaintext block: 0x{:016X}", value);
+  spdlog::debug("Plaintext key: 0x{:016X}", key);
+
+  uint64_t ciphertext = DES::encrypt(value, key);
+
+  spdlog::debug("Final Output...");
+  spdlog::debug("Plaintext block: 0x{:016X}", value);
+  spdlog::debug("Plaintext key: 0x{:016X}", key);
+  spdlog::debug("Ciphertext key: 0x{:016X}", ciphertext);
   return 0;
 }

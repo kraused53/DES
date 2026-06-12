@@ -3,14 +3,20 @@
 #include "Mapper.h"
 #include "spdlog/spdlog.h"
 
-void KeySchedule::generate_schedule(uint64_t ikey) {
-  key = ikey;
-  permuted_key = Mapper::apply_map(ikey, PC1);
+void KeySchedule::generate_schedule(uint64_t key, uint64_t* subkeys) {
+  spdlog::info("Generating key schedule...");
+  uint64_t permuted_key = Mapper::apply_map(key, PC1);
+  spdlog::debug("Key after PC-1: 0x{:016X}", permuted_key);
+
+  uint64_t C[17] = {0};  // The 17 left sub-keys
+  uint64_t D[17] = {0};  // The 17 right sub-keys
 
   // Split the 56-Bit permuted key into two 28-Bit sub keys.
   C[0] = (permuted_key >> 28) & 0xFFFFFFF;
   D[0] = permuted_key & 0xFFFFFFF;
 
+  spdlog::debug("C[ 0]: 0x{:016X}", C[0]);
+  spdlog::debug("D[ 0]: 0x{:016X}", D[0]);
   // Generate 16 Sub keys
   for (int sKey = 1; sKey <= 16; sKey++) {
     // Current C and D are based off of previous C and D
@@ -21,6 +27,9 @@ void KeySchedule::generate_schedule(uint64_t ikey) {
       // of shift_distance
       C[sKey] = shift_left_with_wrap(C[sKey]);
       D[sKey] = shift_left_with_wrap(D[sKey]);
+
+      spdlog::debug("C[{:2d}]: 0x{:016X}", sKey, C[sKey]);
+      spdlog::debug("D[{:2d}]: 0x{:016X}", sKey, D[sKey]);
     }
   }
 
@@ -29,9 +38,11 @@ void KeySchedule::generate_schedule(uint64_t ikey) {
     // Combine this final-key's subkeys
     uint64_t CD = (C[fKey + 1] << 28) | D[fKey + 1];
     // Apply PC-2 to the subkey combo
-    K[fKey] = Mapper::apply_map(CD, PC2);
+    subkeys[fKey] = Mapper::apply_map(CD, PC2);
     // Limit Key to 56 bits
-    K[fKey] &= 0xFFFFFFFFFFFFFF;
+    subkeys[fKey] &= 0xFFFFFFFFFFFFFF;
+
+    spdlog::debug("Subkey[{:2d}]: 0x{:016X}", fKey, subkeys[fKey]);
   }
 }
 

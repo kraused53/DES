@@ -7,6 +7,7 @@ enum SBOX { S1 = 1, S2, S3, S4, S5, S6, S7, S8 };
 class SBox {
  public:
   static uint8_t apply(uint8_t value, SBOX box);
+  static uint8_t apply(uint8_t value, int box);
 
  private:
   inline static const uint8_t iS1[4][16] = {
@@ -56,6 +57,4 @@ class SBox {
       1,  15, 13, 8, 10, 3,  7,  4,  12, 5,  6,  11, 0,  14, 9,  2,
       7,  11, 4,  1, 9,  12, 14, 2,  0,  6,  10, 13, 15, 3,  5,  8,
       2,  1,  14, 7, 4,  10, 8,  13, 15, 12, 9,  0,  3,  5,  6,  11};
-
-  static uint8_t get_bit(uint8_t val, int bit);
 };
