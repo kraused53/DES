@@ -30,6 +30,7 @@ FetchContent_MakeAvailable( spdlog )
 ###############################################################################
 add_library( des_lib STATIC
         src/Mapper.cpp
+        src/SBox.cpp
         # src/KeySchedule.cpp   ← uncomment as you add components
         # src/Feistel.cpp
 )
@@ -70,6 +71,7 @@ if(DES_BUILD_TESTS)
     add_executable(
         des_tests
         tests/test_mapper.cpp
+        tests/test_sbox.cpp
     )
 
     target_link_libraries(
